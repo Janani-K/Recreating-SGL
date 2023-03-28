@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import HomePage from "./Component/Layout/HomePage"
+import LGAnalysis from "./Component/Pages/LGAnalysis";
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
+import Dashboard from "./Component/Pages/Dashboard";
+import NotFound from "./Component/Pages/NotFound";
+import AccountSettings from "./Component/Pages/AccountSettings";
 
-function App() {
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<HomePage />}>
+      <Route index element={<Dashboard />} />
+      <Route path='/LightGrowthAnalysis' element={<LGAnalysis />} />
+      {/* <Route path="1" element={ }/> */}
+      {/* </Route> */}
+      <Route path='/Account/Settings' element={<AccountSettings />} />
+      <Route path='*' element={<NotFound />} />
+    </Route>
+  )
+)
+
+const App = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={router} />
   );
+
 }
 
 export default App;

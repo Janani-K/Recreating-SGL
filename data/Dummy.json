@@ -1,0 +1,60 @@
+{
+  "settings": [
+    {
+      "unit": "si",
+      "isDataEntryChecked": false,
+      "isEmailChecked": true,
+      "isTxtChecked": true,
+      "daysToSuppress": 0,
+      "id": 1
+    },
+    {
+      "unit": "bi",
+      "isDataEntryChecked": false,
+      "isEmailChecked": true,
+      "isTxtChecked": true,
+      "daysToSuppress": 4,
+      "id": 2
+    },
+    {
+      "unit": "bi",
+      "isDataEntryChecked": true,
+      "isEmailChecked": true,
+      "isTxtChecked": true,
+      "daysToSuppress": 3,
+      "id": 3
+    },
+    {
+      "unit": "si",
+      "isDataEntryChecked": false,
+      "isEmailChecked": false,
+      "isTxtChecked": false,
+      "daysToSuppress": 0,
+      "id": 4
+    },
+    {
+      "unit": "si",
+      "isDataEntryChecked": false,
+      "isEmailChecked": false,
+      "isTxtChecked": false,
+      "daysToSuppress": 0,
+      "id": 5
+    },
+    {
+      "unit": "si",
+      "isDataEntryChecked": false,
+      "isEmailChecked": false,
+      "isTxtChecked": false,
+      "daysToSuppress": 0,
+      "id": 6
+    },
+    {
+      "unit": "bi",
+      "isDataEntryChecked": true,
+      "isEmailChecked": false,
+      "isTxtChecked": true,
+      "daysToSuppress": 6,
+      "id": 7
+    }
+  ]
+}
