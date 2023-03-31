@@ -9,12 +9,64 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 
-const Header = ({ logout }) => {
-    // const [language, setlanguage] = useState('English US')
+const Header = ({ logout, t, i18n }) => {
+    const [language, setlanguage] = useState('en')
 
-    // const handleChange = (event) => {
-    //     setlanguage(event.target.value)
-    // }
+    const handleChange = (event) => {
+        setlanguage(event.target.value)
+        i18n.changeLanguage(event.target.value)
+    }
+
+    const languages = [{
+        key: 'en',
+        value: 'English US',
+    }, {
+        key: 'en-GB',
+        value: 'English GB',
+    }, {
+        key: 'de',
+        value: 'Deutsch',
+    }, {
+        key: 'fr',
+        value: 'Français',
+    }, {
+        key: 'it',
+        value: 'Italiano',
+    }, {
+        key: 'nl',
+        value: 'Nederlands',
+    }, {
+        key: 'pt-BR',
+        value: 'Português BR',
+    }, {
+        key: 'pt-PT',
+        value: 'Português PT',
+    }, {
+        key: 'es',
+        value: 'Español',
+    }, {
+        key: 'tr',
+        value: 'Türkçe',
+    }, {
+        key: 'ru',
+        value: 'русский',
+    }, {
+        key: 'pl',
+        value: 'Polski',
+    }, {
+        key: 'hu',
+        value: 'Magyar',
+    }, {
+        key: 'zh',
+        value: '中文',
+    }, {
+        key: 'ja',
+        value: '日本語',
+    }, {
+        key: 'cs',
+        value: 'čeština',
+    }
+    ]
 
     const [popperAnchorEl, setPopperAnchorEl] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -26,39 +78,6 @@ const Header = ({ logout }) => {
         setAnchorEl(null);
     };
     return (
-        // <Box>
-        //     <Stack
-        //         direction='row'
-        //         justifyContent='space-between'
-        //         height='60px'
-        //         width=''
-        //         sx={{
-        //             backgroundColor: '#E5E4E2',
-        //             position: 'absolute'
-        //         }}
-        //     >
-        //         <QuestionAnswerIcon></QuestionAnswerIcon>
-        //         <Stack direction='row'>
-        //             {/* <FormControl fullWidth size='auto'>
-        //                  <InputLabel id="language-select-label">language</InputLabel>
-        //                  <Select
-        //                      labelId="language-select-label"
-        //                      id="language-select"
-        //                      value={language}
-        //                      label="language"
-        //                      onChange={handleChange}
-        //                      defaultValue={'English US'}
-        //                  >
-        //                      <MenuItem value={'english'}>English US</MenuItem>
-        //                      <MenuItem value={'nederlands'}>Nederlands</MenuItem>
-        //                      <MenuItem value={'deutsch'}>Deutsch</MenuItem>
-        //                  </Select>
-        //              </FormControl>
-        //              <img src='sglLogo' alt='profile_picture' width={'100px'} height={'100px'}></img> */}
-        //             <Typography>User name</Typography>
-        //         </Stack>
-        //     </Stack>
-        // </Box>
         <Box>
             <AppBar sx={{ backgroundColor: '#ff6200' }}>
                 <Toolbar>
@@ -75,7 +94,31 @@ const Header = ({ logout }) => {
                     >
                         <Paper elevation={1} sx={{ padding: '5px' }}>0 new news items</Paper>
                     </Popover>
-                    <IconButton onClick={handleClick} sx={{ position: 'absolute', right: '0px' }}><Avatar alt='bokhoven stadion' src={userImage}></Avatar></IconButton>
+                    <Box sx={{ display: 'flex', direction: 'row', position: 'absolute', right: '0px' }}>
+                        <Box width='150px'>
+                            <FormControl fullWidth>
+                                <Select
+                                    id="language-select"
+                                    value={language}
+                                    onChange={handleChange}
+                                    color='warning'
+                                    MenuProps={{
+                                        PaperProps: {
+                                            style: {
+                                                maxHeight: 200,
+                                            },
+                                        },
+                                    }}
+                                >
+                                    {
+                                        languages.map(language => <MenuItem value={language.key}>{language.value}</MenuItem>)
+                                    }
+                                </Select>
+                            </FormControl>
+                        </Box>
+                        <IconButton onClick={handleClick} ><Avatar alt='bokhoven stadion' src={userImage}></Avatar></IconButton>
+                    </Box>
+
                     <Menu
                         anchorEl={anchorEl}
                         id="account-menu"
@@ -133,21 +176,6 @@ const Header = ({ logout }) => {
                             Logout
                         </MenuItem>
                     </Menu>
-                    {/* <FormControl fullWidth size='auto'>
-                        <InputLabel id="language-select-label">language</InputLabel>
-                        <Select
-                            labelId="language-select-label"
-                            id="language-select"
-                            value={language}
-                            label="language"
-                            onChange={handleChange}
-                            defaultValue={'English US'}
-                        >
-                            <MenuItem value={'english'}>English US</MenuItem>
-                            <MenuItem value={'nederlands'}>Nederlands</MenuItem>
-                            <MenuItem value={'deutsch'}>Deutsch</MenuItem>
-                        </Select>
-                    </FormControl> */}
                 </Toolbar>
             </AppBar>
         </Box >

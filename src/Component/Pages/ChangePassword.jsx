@@ -1,20 +1,29 @@
-import { Button, Checkbox, FormControlLabel, FormGroup, Grid, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material"
+import {
+    Button, Checkbox, FormControlLabel, FormGroup, Grid, MenuItem, Paper, Select, Stack, TextField, Typography,
+    Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle
+} from "@mui/material"
 import axios from "axios"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import DialogBox from "../DesignComponents/DialogBox"
 // import useAxios from "../../custom-hook/useAxios"
 
-const ChangePassword = () => {
+const ChangePassword = ({ t }) => {
 
     const {
         register,
         watch,
         handleSubmit,
         formState: { errors },
+        reset
     } = useForm();
 
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
     const onSubmit = (data) => {
-        console.log(data)
+        console.log(data);
+        setIsDialogOpen(true);
+        reset({ oldPwd: '', newPwd: '', confirmNewPwd: '' });
     }
 
     return (
@@ -25,55 +34,57 @@ const ChangePassword = () => {
             }}
             spacing={2}
         >
-            <Typography variant="h5">Change Password</Typography>
-            <Typography variant="body2">Password should contain a minimum of 7 characters,
-                1 lowercase, 1 uppercase, 1 digit and 1 special case</Typography>
+            <Typography variant="h5">{t('change-password')}</Typography>
+            <Typography variant="body2">{t('password-criteria')}</Typography>
 
-            <TextField required type="password" label="Old Password" variant="outlined" color="warning" size="small" fullWidth
+            <TextField required type="password" label={t('old-password')} variant="outlined" color="warning" size="small" fullWidth
                 helperText={errors.oldPwd && errors.oldPwd.message}
                 name="oldPwd" {...register("oldPwd", {
-                    required: "Old Password is required",
-                    // minLength: { value: 7, message: "Password should be at-least 7 characters" }
+                    required: t('old-password-is-required'),
+                    // minLength: {value: 7, message: "Password should be at-least 7 characters" }
                 })} />
-            <TextField required type="password" label="New Password" variant="outlined" color="warning" size="small" fullWidth
+            <TextField required type="password" label={t('new-password')} variant="outlined" color="warning" size="small" fullWidth
                 helperText={errors.newPwd && errors.newPwd.message}
-                name="newPwd" {...register("newPwd", {
-                    required: "New Password is required",
+                name="newPwd"
+                {...register("newPwd", {
+                    required: t('new-password-is-required'),
                     pattern: {
                         value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)(?=.*[!@#$*])/,
-                        message: "Password should contain at least one uppercase letter, lowercase letter, digit, and special symbol"
+                        message: t('password-format-validation')
                     },
-                    minLength: { value: 7, message: "Password should be at-least 7 characters" }
-                })} />
-            <TextField required type="password" label="Confirm New Password" variant="outlined" color="warning" size="small" fullWidth
-                helperText={(errors.confirmNewPwd && errors.confirmNewPwd.message) || (errors.confirmNewPwd?.type === "checkPwdMatch" && "New Password and Confirm Password does not match")}
-                name="confirmNewPwd" {...register("confirmNewPwd", {
-                    required: "Confirm Password is required",
+                    minLength: { value: 7, message: t('password-length-validation') }
+                })}
+            />
+            <TextField required type="password" label={t('confirm-new-password')} variant="outlined" color="warning" size="small" fullWidth
+                helperText={(errors.confirmNewPwd && errors.confirmNewPwd.message) || (errors.confirmNewPwd?.type === "checkPwdMatch" && t('new-password-and-confirm-password-does-not-match'))}
+                name="confirmNewPwd"
+                {...register("confirmNewPwd", {
+                    required: t('confirm-password-is-required'),
                     pattern: {
                         value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)(?=.*[!@#$*])/,
-                        message: "Password should contain at least one uppercase letter, lowercase letter, digit, and special symbol"
+                        message: t('password-format-validation')
                     },
                     validate: {
                         checkPwdMatch: (value) => watch('newPwd') == value,
                     },
-                    minLength: { value: 7, message: "Password should be at-least 7 characters" }
-                })} />
-            <Button variant="contained" color="warning" size="small" onClick={handleSubmit(onSubmit)} >Change Password</Button>
+                    minLength: { value: 7, message: t('password-length-validation') }
+                })}
+            />
+            <Button variant="contained" color="warning" size="small" onClick={handleSubmit(onSubmit)} >{t('change-password')}</Button>
+            {/* {isDialogOpen && <DialogBox dialog={{ visibility: isDialogOpen, title: '', content: 'Password changed successfully!', buttonText: 'OK' }} />} */}
+            <Dialog
+                open={isDialogOpen}
+            >
+                <DialogContent>
+                    <DialogContentText>
+                        {t('password-changed-successfully')} </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="contained" color="warning" size="small" onClick={() => setIsDialogOpen(false)}>
+                        {t('ok')} </Button>
+                </DialogActions>
+            </Dialog>
         </Stack >
-
-        // <Grid container>
-        //     <Grid item>
-        //         <Typography variant="h5">Change Password</Typography>
-        //         <Typography variant="body2" variant="pre">Password should contain a minimum of 7 characters,
-        //             1 lowercase, 1 uppercase, 1 digit and 1 special case</Typography>
-        //         <FormGroup>
-        //             <TextField required type="password" id="oldpwd" label="Old Password" variant="outlined" color="warning" size="small" />
-        //             <TextField required type="password" id="newpwd" label="New Password" variant="outlined" color="warning" size="small" />
-        //             <TextField required type="password" id="confirmnewpwd" label="Confirm New Password" variant="outlined" color="warning" size="small" />
-        //         </FormGroup>
-        //         <Button variant="contained" color="warning" size="small" onClick={(event) => handlePasswordChange(event)} >Change Password</Button>
-        //     </Grid>
-        // </Grid >
     )
 }
 

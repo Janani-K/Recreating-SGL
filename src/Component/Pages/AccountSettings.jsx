@@ -3,7 +3,7 @@ import axios from "axios"
 import { useState } from "react"
 // import useAxios from "../../custom-hook/useAxios"
 
-const AccountSettings = () => {
+const AccountSettings = ({ t }) => {
 
     const days = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
@@ -53,10 +53,10 @@ const AccountSettings = () => {
             }}
             spacing={2}
         >
-            <Typography variant="h5">Change Account Settings</Typography>
+            <Typography variant="h5">{t('change-account-settings')}</Typography>
             <FormGroup>
                 <Stack direction='row' sx={{ alignItems: 'center' }} spacing={2}>
-                    <Typography>Unit System</Typography>
+                    <Typography>{t('unit-system')}</Typography>
                     <Select
                         sx={{ width: '300px' }}
                         size="small"
@@ -64,16 +64,16 @@ const AccountSettings = () => {
                         value={unit}
                         onChange={(event) => setUnit(event.target.value)}
                     >
-                        <MenuItem value={'si'}>International System of Units - (SI)</MenuItem>
-                        <MenuItem value={'bi'}>Imperial / US Unts- (BI)</MenuItem>
+                        <MenuItem value={'si'}>{t('units-si')}</MenuItem>
+                        <MenuItem value={'bi'}>{t('units-bi')}</MenuItem>
                     </Select>
                 </Stack>
-                <FormControlLabel control={<Checkbox checked={isDataEntryChecked} color='warning' onChange={() => setIsDataEntryChecked(!isDataEntryChecked)} />} label="Always use new Data Entry method" />
-                <FormControlLabel control={<Checkbox checked={isTxtChecked} color='warning' onChange={() => setIsTxtChecked(!isTxtChecked)} />} label="Send notifications by TXT messages" />
-                <FormControlLabel control={<Checkbox checked={isEmailChecked} color='warning' onChange={() => setIsEmailChecked(!isEmailChecked)} />} label="Send notifications by Email messages" />
+                <FormControlLabel control={<Checkbox checked={isDataEntryChecked} color='warning' onChange={() => setIsDataEntryChecked(!isDataEntryChecked)} />} label={t('data-entry-method')} />
+                <FormControlLabel control={<Checkbox checked={isTxtChecked} color='warning' onChange={() => setIsTxtChecked(!isTxtChecked)} />} label={t('send-notifications-txt')} />
+                <FormControlLabel control={<Checkbox checked={isEmailChecked} color='warning' onChange={() => setIsEmailChecked(!isEmailChecked)} />} label={t('send-notifications-email')} />
 
                 <Stack direction='row' sx={{ alignItems: 'center' }} spacing={2}>
-                    <Typography># days to suppress notifications by email</Typography>
+                    <Typography>{t('days-to-suppress-notifications-by-email')}</Typography>
                     <Select
                         size="small"
                         // id="demo-simple-select-standard"
@@ -86,52 +86,8 @@ const AccountSettings = () => {
                     </Select>
                 </Stack>
             </FormGroup>
-            <Button variant="contained" color="warning" size="small" onClick={(event) => handleChangeSettings(event)} >Change Settings</Button>
+            <Button variant="contained" color="warning" size="small" onClick={(event) => handleChangeSettings(event)} >{t('change-settings')}</Button>
         </Stack>
-
-        // <Stack
-        //     sx={{
-        //         alignItems: 'center'
-        //     }}
-        //     spacing={2}
-        // >
-        //     <Typography variant="h5">Change Account Settings</Typography>
-        //     <FormGroup>
-        //         <Stack direction='row' sx={{ alignItems: 'center' }} spacing={2}>
-        //             <Typography>Unit System</Typography>
-        //             <Select
-        //                 sx={{ width: '300px' }}
-        //                 size="small"
-        //                 // id="demo-simple-select-standard"
-        //                 name="unit"
-        //                 value={inputs.unit}
-        //                 onChange={handleChange}
-        //             >
-        //                 <MenuItem value={'si'}>International System of Units - (SI)</MenuItem>
-        //                 <MenuItem value={'bi'}>Imperial / US Unts- (BI)</MenuItem>
-        //             </Select>
-        //         </Stack>
-        //         <FormControlLabel control={<Checkbox checked={inputs.dataEntry} name='dataEntry' color='warning' onChange={handleChange} />} label="Always use new Data Entry method" />
-        //         <FormControlLabel control={<Checkbox checked={inputs.text} name='text' color='warning' onChange={handleChange} />} label="Send notifications by TXT messages" />
-        //         <FormControlLabel control={<Checkbox checked={inputs.email} name='email' color='warning' onChange={handleChange} />} label="Send notifications by Email messages" />
-
-        //         <Stack direction='row' sx={{ alignItems: 'center' }} spacing={2}>
-        //             <Typography># days to suppress notifications by email</Typography>
-        //             <Select
-        //                 size="small"
-        //                 // id="demo-simple-select-standard"
-        //                 name="suppressDays"
-        //                 value={inputs.suppressDays}
-        //                 onChange={handleChange}
-        //             >
-        //                 {days && days.map((day, index) => (
-        //                     <MenuItem key={index} value={day}>{day}</MenuItem>
-        //                 ))}
-        //             </Select>
-        //         </Stack>
-        //     </FormGroup>
-        //     <Button variant="contained" color="warning" size="small" onClick={(event) => handleSubmit(event)} >Change Settings</Button>
-        // </Stack>
     )
 }
 

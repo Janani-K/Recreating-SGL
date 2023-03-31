@@ -14,13 +14,16 @@ import AccountSettings from "./Component/Pages/AccountSettings";
 import { Backdrop, Box, Button, CircularProgress, Stack, Typography } from '@mui/material';
 import ChangePassword from './Component/Pages/ChangePassword';
 import Contact from './Component/Pages/Contact';
+import { Suspense } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 
 const authService = new AuthService({
     clientId: 'sgl-portal-client-prd',
     // clientSecret: '6E8CB9C3-4DB6-4B62-A789-61912265A16A',
     provider: 'https://sglidsrv.azurewebsites.net/identity/connect',
     redirectUri: 'https://localhost:3000',
-    scopes: ['SglPortal', 'SglPortal.w', 'openid', 'profile', 'email', 'roles', 'offline_access'],
+    // scopes: ['SglPortal', 'SglPortal.w', 'openid', 'profile', 'email', 'roles', 'offline_access'],
+    scopes: ['openid'],
 });
 
 const SecuredApp = () => {
@@ -32,15 +35,17 @@ const SecuredApp = () => {
     const token = authService.getAuthTokens();
     console.log("Token++", token)
 
+    const { t, i18n } = useTranslation();
+
     const router = createBrowserRouter(
         createRoutesFromElements(
-            <Route path="/" element={<HomePage logout={logout} />}>
+            <Route path="/" element={<HomePage logout={logout} t={t} i18n={i18n} />}>
                 <Route index element={<Dashboard />} />
                 <Route path='/LightGrowthAnalysis' element={<LGAnalysis />} />
                 {/* <Route path="1" element={ }/> */}
                 {/* </Route> */}
-                <Route path='/Account/Settings' element={<AccountSettings />} />
-                <Route path='/Account/ChangePassword' element={<ChangePassword />} />
+                <Route path='/Account/Settings' element={<AccountSettings t={t} />} />
+                <Route path='/Account/ChangePassword' element={<ChangePassword t={t} />} />
                 <Route path='/Contact' element={<Contact />} />
                 <Route path='*' element={<NotFound />} />
             </Route>
@@ -64,7 +69,6 @@ const SecuredApp = () => {
                             <Typography>This will redirect you to SGL login page for authentication!</Typography>
                         </Stack >
                     )
-
             }
         </div>
     );
@@ -73,7 +77,9 @@ const SecuredApp = () => {
 const WrappedSecuredApp = () => {
     return (
         <AuthProvider authService={authService} >
-            <SecuredApp />
+            <Suspense fallback='...is loading'>
+                <SecuredApp />
+            </Suspense>
         </AuthProvider>
     );
 }
