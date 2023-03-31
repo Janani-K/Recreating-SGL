@@ -58,7 +58,7 @@ const Dashboard = () => {
         <>
             {/* <Card pitchData={pitchData} /> */}
             {/* {console.log(pitchData)} */}
-            <Grid container spacing={3}>
+            <Grid container spacing={2} justifyContent='center'>
                 <Grid item><Card /></Grid>
                 <Grid item><Card /></Grid>
                 <Grid item><Card /></Grid>
